@@ -33,7 +33,7 @@ public class EntryServiceImpl implements EntryService{
     @Override
     @Transactional(readOnly = true) // 조회 전용 트랜잭션
     public Optional<Entry> findById(Long id) {
-        return findById(id);
+        return repo.findById(id);
     }
 
     @Override
