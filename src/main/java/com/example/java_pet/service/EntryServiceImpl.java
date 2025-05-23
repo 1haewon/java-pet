@@ -2,8 +2,10 @@ package com.example.java_pet.service;
 
 import com.example.java_pet.domain.Entry;
 import com.example.java_pet.repository.EntryRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +41,23 @@ public class EntryServiceImpl implements EntryService{
     @Override
     public void deleteById(Long id) {
         repo.deleteById(id);
+    }
+
+    @Override
+    public Entry update(Long id, Entry toUpdate) {
+        Entry existing = repo.findById(id)
+                .orElseThrow(()->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found " + id));
+
+        existing.setDate(toUpdate.getDate());
+        existing.setCategory(toUpdate.getCategory());
+        existing.setAmount(toUpdate.getAmount());
+        existing.setDescription(toUpdate.getDescription());
+
+        return repo.save(existing);
+
+
+
     }
 
 

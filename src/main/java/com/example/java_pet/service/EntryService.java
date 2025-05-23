@@ -13,4 +13,7 @@ public interface EntryService {
     Optional<Entry> findById(Long id);
 
     void deleteById(Long id);
+
+    Entry update(Long id, Entry toUpdate);
+
 }
